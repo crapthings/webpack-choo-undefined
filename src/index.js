@@ -1,15 +1,25 @@
-const choo = require('choo')
-const app = choo()
+const components = require('./components')
 
-const html = require('choo/html')
-
-const myCoolView = () => html`
-  <div>hello pink world!</div>
-`
+app.model({
+  state: {
+    title: 'Not quite set yet'
+  },
+  reducers: {
+    update: (data, state) => ({
+      title: data
+    })
+  }
+})
 
 app.router((route) => [
-  route('/', myCoolView)
+  route('/', components.layout(components.home)),
+  route('/about', components.layout(components.about))
 ])
 
-const tree = app.start()
-document.body.appendChild(tree)
+const view = app.start()
+
+const container = document.getElementById('app')
+
+container.innerHTML = ''
+
+container.appendChild(view)

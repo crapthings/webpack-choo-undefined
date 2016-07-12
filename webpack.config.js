@@ -12,7 +12,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  devtool: 'cheap-eval-source-map',
+  devtool: 'source-map',
 
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
@@ -73,6 +73,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'webpack choo',
       template: './src/index.hbs'
+    }),
+
+    new webpack.ProvidePlugin({
+      choo: 'choo',
+      render: 'choo/html'
     })
   ],
 

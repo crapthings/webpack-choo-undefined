@@ -2,8 +2,6 @@ require('babel-polyfill')
 
 require('./screen.styl')
 
-require('./index')
-
 // dev only
 
 if (process.env.NODE_ENV !== 'production') {
@@ -19,3 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
   window.addEventListener('message', dev.reloadStyle, false)
 
 }
+
+window.app = choo()
+
+require('./index')
