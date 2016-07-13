@@ -20,4 +20,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 window.app = choo()
 
+window.horizon = Horizon({
+	host: 'localhost:8181'
+})
+
 require('./index')

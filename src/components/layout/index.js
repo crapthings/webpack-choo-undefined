@@ -11,6 +11,7 @@ module.exports = (view) => (state, prev, send) => render`
 const header = () => render`
   <div id='layout-header'>
     <a href="/">home</a>
+    <a href="/posts">posts</a>
   	<a href="/users">users</a>
   	<a href="/about">about</a>
   </div>

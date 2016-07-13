@@ -76,6 +76,7 @@ module.exports = {
     }),
 
     new webpack.ProvidePlugin({
+      Horizon: '@horizon/client',
       choo: 'choo',
       render: 'choo/html',
       _: 'lodash',
