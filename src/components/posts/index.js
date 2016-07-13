@@ -45,7 +45,7 @@ function form(state, prev, send) {
   `
 
   function submit (e) {
-    send('posts:create', { payload: state.posts.item })
+    send('posts:insert', { payload: state.posts.item })
     e.target.reset()
     e.preventDefault()
   }
@@ -56,6 +56,6 @@ function form(state, prev, send) {
   }
 
   function refetch() {
-    send('posts:fetch')
+    send('posts:subscribe')
   }
 }

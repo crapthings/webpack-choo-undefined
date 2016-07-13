@@ -2,6 +2,8 @@ const faker = require('faker')
 
 const _ = require('lodash')
 
+window.Posts = horizon('posts')
+
 app.model({
 
   namespace: 'posts',
@@ -12,16 +14,22 @@ app.model({
   },
 
   subscriptions: [
-    (send, done) => send('posts:fetch', done)
+    (send, done) => send('posts:subscribe', done)
   ],
 
   effects: {
-    fetch: (data, state, send, done) => {
-      let posts = _.times(10, n => {
-        return new Post()
+    subscribe: (data, state, send, done) => {
+      Posts.watch().subscribe( posts => {
+        send('posts:init', { payload: posts }, done)
       })
+    },
 
-      send('posts:init', { payload: posts }, done)
+    insert: (data, state, send, done) => {
+      Posts.insert(data.payload)
+    },
+
+    remove: (data, state) => {
+      Posts.remove(data.payload.id)
     }
   },
 
@@ -32,23 +40,11 @@ app.model({
       }
     },
 
-    create: (data, state) => {
-      return {
-        list: state.list.concat(data.payload)
-      }
-    },
-
-    remove: (data, state) => {
-      return {
-        list: _.without(state.list, data.payload)
-      }
-    },
-
     updatePostState: (data, state) => {
       return {
         item: data.payload
       }
-    },
+    }
   }
 
 })
