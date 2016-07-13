@@ -4,7 +4,7 @@ const User = require('./model')
 
 module.exports = (state, prev, send) => render`
   <div>
-    <h3>user list</h3>
+    <h3>${state.users.length} users</h3>
     ${userForm(state, prev, send)}
     ${userList(state, prev, send)}
   </div>
@@ -15,6 +15,7 @@ function userList(state, prev, send) {
     <table>
       <thead>
         <tr>
+          <th width='60'>No.</th>
           <th width='60'>avatar</th>
           <th width='200'>name</th>
           <th width='200'>username</th>
@@ -22,11 +23,13 @@ function userList(state, prev, send) {
           <th width='200'>website</th>
           <th>phone</th>
           <th>lorem</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        ${state.users.map((user) => render`
+        ${state.users.map((user, i) => render`
           <tr>
+            <td>${i + 1}</td>
             <td>
               <img src='${user.avatar}' alt='${user.name}' class='img-avatar' />
             </td>
@@ -36,32 +39,42 @@ function userList(state, prev, send) {
             <td>${user.website}</td>
             <td>${user.phone}</td>
             <td>${user.lorem}</td>
+            <td>
+              <button onclick=${(e) => send('remove', { payload: user })}>remove</button>
+            </td>
           </tr>
         `)}
       </tbody>
     </table>
   `
+
+  function remove (user) {
+    console.log(user)
+  }
 }
 
 function userForm(state, prev, send) {
   return render`
     <form onsubmit=${submit}>
-      <input type='text' id='username' placeholder='enter an username' required autofocus />
+      <input type='text' id='username' onkeyup=${handleKeyup} placeholder='enter an username' required autofocus />
       <input type='submit' value='submit' />
       <input type='button' value='refetch' onclick=${refetch} />
     </form>
   `
 
   function submit (e) {
+    send('create', { payload: state.user })
+    e.target.reset()
     e.preventDefault()
-    let $username = document.getElementById('username')
+  }
+
+  function handleKeyup (e) {
     let user = new User({
-      username: $username.value,
+      username: e.currentTarget.value,
       avatar: faker.internet.avatar(),
       lorem: faker.lorem.sentence()
     })
-    send('add', { payload: user })
-    $username.value = ''
+    send('updateUserState', { payload: user })
   }
 
   function refetch() {

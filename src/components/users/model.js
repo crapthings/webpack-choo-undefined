@@ -5,6 +5,7 @@ const _ = require('lodash')
 app.model({
 
   state: {
+    user: {},
     users: []
   },
 
@@ -32,11 +33,23 @@ app.model({
       }
     },
 
-    add: (data, state) => {
+    create: (data, state) => {
       return {
         users: state.users.concat(data.payload)
       }
-    }
+    },
+
+    remove: (data, state) => {
+      return {
+        users: _.without(state.users, data.payload)
+      }
+    },
+
+    updateUserState: (data, state) => {
+      return {
+        user: data.payload
+      }
+    },
   }
 
 })

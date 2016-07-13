@@ -77,7 +77,9 @@ module.exports = {
 
     new webpack.ProvidePlugin({
       choo: 'choo',
-      render: 'choo/html'
+      render: 'choo/html',
+      _: 'lodash',
+      faker: 'faker'
     })
   ],
 
