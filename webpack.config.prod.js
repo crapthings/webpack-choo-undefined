@@ -15,8 +15,6 @@ module.exports = {
   devtool: 'source-map',
 
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/dev-server',
     './src/loader'
   ],
 
@@ -66,7 +64,13 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false,
+      },
+    }),
+
+    new webpack.optimize.OccurrenceOrderPlugin(),
 
     new ExtractTextPlugin('bundle.css'),
 
@@ -79,10 +83,5 @@ module.exports = {
       choo: 'choo',
       render: 'choo/html'
     })
-  ],
-
-  devServer: {
-    contentBase: './dist',
-    hot: true
-  }
+  ]
 }

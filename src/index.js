@@ -1,18 +1,8 @@
 const components = require('./components')
 
-app.model({
-  state: {
-    title: 'Not quite set yet'
-  },
-  reducers: {
-    update: (data, state) => ({
-      title: data
-    })
-  }
-})
-
 app.router((route) => [
   route('/', components.layout(components.home)),
+  route('/users', components.layout(components.users)),
   route('/about', components.layout(components.about))
 ])
 

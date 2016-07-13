@@ -8,7 +8,8 @@ module.exports = (view) => (params, state, send) => render `
 
 const header = () => render `
   <nav>
-  	<a href="/">home</a>
+    <a href="/">home</a>
+  	<a href="/users">users</a>
   	<a href="/about">about</a>
   </nav>
 `
