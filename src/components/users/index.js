@@ -1,4 +1,6 @@
-require('./model')
+const faker = require('faker')
+
+const User = require('./model')
 
 module.exports = (state, prev, send) => render`
   <div>
@@ -53,7 +55,12 @@ function userForm(state, prev, send) {
   function submit (e) {
     e.preventDefault()
     let $username = document.getElementById('username')
-    send('add', { payload: { username: username.value } })
+    let user = new User({
+      username: $username.value,
+      avatar: faker.internet.avatar(),
+      lorem: faker.lorem.sentence()
+    })
+    send('add', { payload: user })
     $username.value = ''
   }
 

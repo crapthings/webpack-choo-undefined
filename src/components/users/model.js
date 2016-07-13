@@ -15,7 +15,7 @@ app.model({
   effects: {
     fetch: (data, state, send, done) => {
       let users = _.times(10, n => {
-        return _.extend(faker.helpers.userCard(), {
+        return new User({
           avatar: faker.internet.avatar(),
           lorem: faker.lorem.sentence()
         })
@@ -40,3 +40,9 @@ app.model({
   }
 
 })
+
+const User = function(opts) {
+  return _.extend(faker.helpers.userCard(), opts || {})
+}
+
+module.exports = User
