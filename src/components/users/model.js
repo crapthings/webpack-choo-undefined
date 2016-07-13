@@ -1,6 +1,6 @@
 const faker = require('faker')
 
-const times = require('lodash').times
+const _ = require('lodash')
 
 app.model({
 
@@ -8,33 +8,35 @@ app.model({
     users: []
   },
 
-  subscriptions: [init],
+  subscriptions: [
+    (send, done) => send('fetch', done)
+  ],
 
-  // effects: {
-  //   init: (data, state) => {
-  //     console.log(state)
-  //     state.users = data.payload
-  //   }
-  // },
+  effects: {
+    fetch: (data, state, send, done) => {
+      let users = _.times(10, n => {
+        return _.extend(faker.helpers.userCard(), {
+          avatar: faker.internet.avatar(),
+          lorem: faker.lorem.sentence()
+        })
+      })
+
+      send('init', { payload: users }, done)
+    }
+  },
 
   reducers: {
     init: (data, state) => {
-      console.log(data, state)
-      state.users = data.payload
       return {
         users: data.payload
+      }
+    },
+
+    add: (data, state) => {
+      return {
+        users: state.users.concat(data.payload)
       }
     }
   }
 
 })
-
-function init(send, done) {
-  let data = times(10, n => {
-    return {
-      username: faker.internet.userName()
-    }
-  })
-
-  send('init', { payload: data }, done)
-}

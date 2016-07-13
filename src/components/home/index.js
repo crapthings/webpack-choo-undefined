@@ -1,5 +1,7 @@
-module.exports = () => render `
-  <div>
-    <h1>home</h1>
-  </div>
-`
+module.exports = () => {
+  return render`
+    <div>
+      <h1>home</h1>
+    </div>
+  `
+}

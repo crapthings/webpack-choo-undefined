@@ -1,12 +1,12 @@
-module.exports = (view) => (params, state, send) => render `
+module.exports = (view) => (state, prev, send) => render`
   <div>
     ${header()}
-    ${view(params, state, send)}
+    ${view(state, prev, send)}
     ${footer()}
   </div>
 `
 
-const header = () => render `
+const header = () => render`
   <nav>
     <a href="/">home</a>
   	<a href="/users">users</a>
@@ -14,6 +14,6 @@ const header = () => render `
   </nav>
 `
 
-const footer = () => render `
+const footer = () => render`
   <div>footer</div>
 `
