@@ -1,10 +1,15 @@
 require('./model')
 
-module.exports = (state, prev, send) => {
-  return render`
+module.exports = (state, prev, send) => render`
   <div>
     <h3>user list</h3>
     ${userForm(state, prev, send)}
+    ${userList(state, prev, send)}
+  </div>
+`
+
+function userList(state, prev, send) {
+  return render`
     <table>
       <thead>
         <tr>
@@ -33,8 +38,8 @@ module.exports = (state, prev, send) => {
         `)}
       </tbody>
     </table>
-  </div>
-`}
+  `
+}
 
 function userForm(state, prev, send) {
   return render`
@@ -44,6 +49,7 @@ function userForm(state, prev, send) {
       <input type='button' value='refetch' onclick=${refetch} />
     </form>
   `
+
   function submit (e) {
     e.preventDefault()
     let $username = document.getElementById('username')
@@ -54,5 +60,4 @@ function userForm(state, prev, send) {
   function refetch() {
     send('fetch')
   }
-
 }

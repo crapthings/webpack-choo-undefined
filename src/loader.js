@@ -1,6 +1,6 @@
 require('babel-polyfill')
 
-require('./screen.styl')
+require('./styles/desktop.styl')
 
 // dev only
 

@@ -1,19 +1,21 @@
 module.exports = (view) => (state, prev, send) => render`
   <div>
     ${header()}
-    ${view(state, prev, send)}
+    <div id='layout-main'>
+      ${view(state, prev, send)}
+    </div>
     ${footer()}
   </div>
 `
 
 const header = () => render`
-  <nav>
+  <div id='layout-header'>
     <a href="/">home</a>
   	<a href="/users">users</a>
   	<a href="/about">about</a>
-  </nav>
+  </div>
 `
 
 const footer = () => render`
-  <div>footer</div>
+  <div id='layout-footer'> choo is supa dupa fly </div>
 `
