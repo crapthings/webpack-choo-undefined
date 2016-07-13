@@ -10,6 +10,7 @@ const view = app.start()
 
 const container = document.getElementById('app')
 
-container.innerHTML = ''
+// container.innerHTML = ''
 
-container.appendChild(view)
+// container.appendChild(view)
+document.body.appendChild(view)

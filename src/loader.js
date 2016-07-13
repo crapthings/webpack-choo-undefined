@@ -1,6 +1,10 @@
+const choo = require('choo')
+
+window.render = require('choo/html')
+
 require('babel-polyfill')
 
-require('./screen.styl')
+// require('./screen.styl')
 
 // dev only
 
@@ -10,7 +14,7 @@ if (process.env.NODE_ENV !== 'production') {
     module.hot.accept()
   }
 
-  require('./index.hbs')
+  // require('./index.hbs')
 
   const dev = require('./dev')
 

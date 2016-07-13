@@ -19,8 +19,6 @@ app.model({
 
   reducers: {
     init: (data, state) => {
-      console.log(data, state)
-      state.users = data.payload
       return {
         users: data.payload
       }
