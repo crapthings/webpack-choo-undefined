@@ -12,11 +12,10 @@ module.exports = (state, prev, send) => render`
 
 function userList(state, prev, send) {
   return render`
-    <table>
+    <table onload=${e => send('fetch')}>
       <thead>
         <tr>
           <th width='60'>No.</th>
-          <th width='60'>avatar</th>
           <th width='200'>name</th>
           <th width='200'>username</th>
           <th width='300'>email</th>
@@ -30,9 +29,6 @@ function userList(state, prev, send) {
         ${state.users.map((user, i) => render`
           <tr>
             <td>${i + 1}</td>
-            <td>
-              <img src='${user.avatar}' alt='${user.name}' class='img-avatar' />
-            </td>
             <td>${user.name}</td>
             <td>${user.username}</td>
             <td>${user.email}</td>

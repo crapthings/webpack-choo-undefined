@@ -13,13 +13,13 @@ app.model({
     list: []
   },
 
-  subscriptions: [
-    (send, done) => send('posts:subscribe', done)
-  ],
+  // subscriptions: [
+  //   (send, done) => send('posts:subscribe', done)
+  // ],
 
   effects: {
     subscribe: (data, state, send, done) => {
-      Posts.watch().subscribe( posts => {
+      Posts.watch().subscribe(posts => {
         send('posts:init', { payload: posts }, done)
       })
     },
@@ -48,12 +48,3 @@ app.model({
   }
 
 })
-
-const Post = function () {
-  return {
-    title: faker.lorem.sentence(),
-    content: faker.lorem.sentences()
-  }
-}
-
-module.exports = Post

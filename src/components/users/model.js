@@ -9,9 +9,9 @@ app.model({
     users: []
   },
 
-  subscriptions: [
-    (send, done) => send('fetch', done)
-  ],
+  // subscriptions: [
+  //   (send, done) => send('fetch', done)
+  // ],
 
   effects: {
     fetch: (data, state, send, done) => {

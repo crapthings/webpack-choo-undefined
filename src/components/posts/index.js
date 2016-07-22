@@ -1,8 +1,8 @@
 const faker = require('faker')
 
-const Post = require('./model')
+require('./model')
 
-module.exports = (state, prev, send) => render`
+module.exports = (state, prev, send, done) => render`
   <div>
     <h3>${state.posts.list.length} posts</h3>
     ${form(state, prev, send)}
@@ -10,9 +10,9 @@ module.exports = (state, prev, send) => render`
   </div>
 `
 
-function list(state, prev, send) {
+function list(state, prev, send, done) {
   return render`
-    <table>
+    <table onload=${e => { send('posts:subscribe', done) }}>
       <thead>
         <tr>
           <th width='60'>No.</th>
@@ -51,8 +51,9 @@ function form(state, prev, send) {
   }
 
   function handleKeyup (e) {
-    let post = new Post()
-    send('posts:updatePostState', { payload: post })
+    send('posts:updatePostState', { payload: {
+      title: e.target.value
+    }})
   }
 
   function refetch() {
