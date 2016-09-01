@@ -4,9 +4,11 @@ const _ = require('lodash')
 
 app.model({
 
+  namespace: 'users',
+
   state: {
-    user: {},
-    users: []
+    item: {},
+    list: []
   },
 
   // subscriptions: [
@@ -14,7 +16,7 @@ app.model({
   // ],
 
   effects: {
-    fetch: (data, state, send, done) => {
+    subscribe: (data, state, send, done) => {
       let users = _.times(10, n => {
         return new User({
           avatar: faker.internet.avatar(),
@@ -22,32 +24,32 @@ app.model({
         })
       })
 
-      send('init', { payload: users }, done)
+      send('users:init', { payload: users }, done)
     }
   },
 
   reducers: {
     init: (data, state) => {
       return {
-        users: data.payload
+        list: data.payload
       }
     },
 
     create: (data, state) => {
       return {
-        users: state.users.concat(data.payload)
+        list: state.list.concat(data.payload)
       }
     },
 
     remove: (data, state) => {
       return {
-        users: _.without(state.users, data.payload)
+        list: _.without(state.list, data.payload)
       }
     },
 
     updateUserState: (data, state) => {
       return {
-        user: data.payload
+        item: data.payload
       }
     },
   }

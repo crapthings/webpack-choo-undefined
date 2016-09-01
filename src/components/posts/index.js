@@ -10,9 +10,9 @@ module.exports = (state, prev, send, done) => render`
   </div>
 `
 
-function list(state, prev, send, done) {
+function list(state, prev, send) {
   return render`
-    <table onload=${e => { send('posts:subscribe', done) }}>
+    <table onload=${test}>
       <thead>
         <tr>
           <th width='60'>No.</th>
@@ -33,6 +33,11 @@ function list(state, prev, send, done) {
       </tbody>
     </table>
   `
+
+  function test () {
+    console.log('posts loaded')
+    send('posts:subscribe')
+  }
 }
 
 function form(state, prev, send) {

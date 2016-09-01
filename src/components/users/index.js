@@ -12,7 +12,7 @@ module.exports = (state, prev, send) => render`
 
 function userList(state, prev, send) {
   return render`
-    <table onload=${e => send('fetch')}>
+    <table onload=${test}>
       <thead>
         <tr>
           <th width='60'>No.</th>
@@ -26,7 +26,7 @@ function userList(state, prev, send) {
         </tr>
       </thead>
       <tbody>
-        ${state.users.map((user, i) => render`
+        ${state.users.list.map((user, i) => render`
           <tr>
             <td>${i + 1}</td>
             <td>${user.name}</td>
@@ -36,13 +36,18 @@ function userList(state, prev, send) {
             <td>${user.phone}</td>
             <td>${user.lorem}</td>
             <td>
-              <button onclick=${(e) => send('remove', { payload: user })}>remove</button>
+              <button onclick=${(e) => send('users:remove', { payload: user })}>remove</button>
             </td>
           </tr>
         `)}
       </tbody>
     </table>
   `
+
+  function test () {
+    console.log('users loaded')
+    send('users:subscribe')
+  }
 
   function remove (user) {
     console.log(user)
@@ -59,9 +64,9 @@ function userForm(state, prev, send) {
   `
 
   function submit (e) {
-    send('create', { payload: state.user })
-    e.target.reset()
     e.preventDefault()
+    send('users:create', { payload: state.users.item })
+    e.target.reset()
   }
 
   function handleKeyup (e) {
@@ -70,10 +75,10 @@ function userForm(state, prev, send) {
       avatar: faker.internet.avatar(),
       lorem: faker.lorem.sentence()
     })
-    send('updateUserState', { payload: user })
+    send('users:updateUserState', { payload: user })
   }
 
   function refetch() {
-    send('fetch')
+    send('users:subscribe')
   }
 }
